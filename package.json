@@ -1,6 +1,6 @@
 {
   "name": "heying",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "my first npm package",
   "main": "index.js",
   "scripts": {
