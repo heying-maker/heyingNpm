@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+/**
+ * 表示这个文件默认使用node执行
+ */
 const fs = require('fs');
 
 const program = require('commander');
@@ -13,7 +16,7 @@ const package = require('./package.json'); //获取版本信息
 const re = new RegExp("^[a-zA-Z]+$"); //检查文件名是否是英文，只支持英文
 
 program
-  .version(package.version, '-v,--version')
+  .version(package.version, '-v,--version')  // version号
   .command('init <name>')
   .action(name => {
     if (!re.test(name)) { //检查文件名是否是英文
@@ -40,6 +43,10 @@ program
           const spinner = ora('正在下载模板...');
           spinner.start();
           const type = getType(answers)
+          /**
+           * 下载git模板并写入文件夹，创建模板
+           * 模板地址：https://github.com/NewPrototype/template/#master
+           */
           download(`github:NewPrototype/template/#${type}`, name, err => {
             if (err) {
               spinner.fail();
@@ -50,7 +57,7 @@ program
                 let fileName=`${name}/${files[i]}`;
                 if(fs.existsSync(`${name}/${files[i]}`)){
                   const content = fs.readFileSync(fileName).toString();
-                  const result = handlebars.compile(content)({template:name,});
+                  const result = handlebars.compile(content)({template:name,}); // 编译模版
                   fs.writeFileSync(fileName, result);
                 }
 
